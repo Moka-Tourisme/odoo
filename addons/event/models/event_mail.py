@@ -196,7 +196,7 @@ class EventMailScheduler(models.Model):
             new += [{
                 'registration_id': registration.id,
                 'scheduler_id': scheduler.id,
-            } for registration in registrations]
+            } for registration in registrations.filtered(lambda reg: reg.email)]
         if new:
             return self.env['event.mail.registration'].create(new)
         return self.env['event.mail.registration']
