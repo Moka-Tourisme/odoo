@@ -141,6 +141,8 @@ class AuthSignupHome(Home):
             raise UserError(_("The form was not properly filled in."))
         if values.get('password') != qcontext.get('confirm_password'):
             raise UserError(_("Passwords do not match; please retype them."))
+        if values.get('login') and not tools.single_email_re.match(values.get('login')):
+            raise UserError(_("Invalid email address. Check for blank spaces or special characters."))
         supported_lang_codes = [code for code, _ in request.env['res.lang'].get_installed()]
         lang = request.context.get('lang', '')
         if lang in supported_lang_codes:
